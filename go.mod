@@ -62,6 +62,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.7.0
 	go.uber.org/multierr v1.9.0
 	go.uber.org/zap v1.24.0
+	golang.org/x/exp v0.0.0-20230129154200-a960b3787bd2
 	golang.org/x/sys v0.4.0
 )
 
@@ -123,7 +124,6 @@ require (
 	github.com/whyrusleeping/go-keyspace v0.0.0-20160322163242-5b898ac5add1 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	golang.org/x/crypto v0.5.0 // indirect
-	golang.org/x/exp v0.0.0-20230129154200-a960b3787bd2 // indirect
 	golang.org/x/mod v0.7.0 // indirect
 	golang.org/x/net v0.5.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
