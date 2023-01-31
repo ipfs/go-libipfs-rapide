@@ -38,7 +38,7 @@ require (
 	github.com/ipfs/go-unixfsnode v1.5.1
 	github.com/ipfs/interface-go-ipfs-core v0.10.0
 	github.com/ipld/go-car v0.5.0
-	github.com/ipld/go-car/v2 v2.5.1
+	github.com/ipld/go-car/v2 v2.6.0
 	github.com/ipld/go-codec-dagpb v1.5.0
 	github.com/ipld/go-ipld-prime v0.19.0
 	github.com/jbenet/goprocess v0.1.4
@@ -58,8 +58,8 @@ require (
 	github.com/stretchr/testify v1.8.1
 	github.com/tj/assert v0.0.3
 	go.opencensus.io v0.24.0
-	go.opentelemetry.io/otel v1.7.0
-	go.opentelemetry.io/otel/trace v1.7.0
+	go.opentelemetry.io/otel v1.12.0
+	go.opentelemetry.io/otel/trace v1.12.0
 	go.uber.org/multierr v1.9.0
 	go.uber.org/zap v1.24.0
 	golang.org/x/exp v0.0.0-20230129154200-a960b3787bd2
