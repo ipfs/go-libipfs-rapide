@@ -28,30 +28,62 @@ type ClosableBlockIterator interface {
 	blocks.BlockIterator
 }
 
+type ClientDrivenDownloader interface {
+	// Download must be asynchronous. It schedule blocks to be downloaded and
+	// callbacks to be called when either it failed or succeeded.
+	// Clients need to callback when they have blocks or error.
+	// In the callback either []byte != nil and error == nil or error != nil and []byte == nil.
+	// When a callback for a cid is called the CID is cancel regardless of the success.
+	// The callback is expected to be really fast and should be called synchronously.
+	// All callbacks are threadsafe and may be called concurrently. But consumers
+	// must not go out of their way to call them concurrently. Just do whatever
+	// your underlying impl already do.
+	Download(...CidCallbackPair)
+
+	// Cancel must be asynchronous.
+	// It indicates that we are no longer intrested in some blocks.
+	// The callbacks are still allowed to be called again but that really not advised.
+	// It would be nice if consumers freed the callbacks in the short term after this is called.
+	Cancel(...cid.Cid)
+}
+
+type CidCallbackPair struct {
+	Cid      cid.Cid
+	Callback ClientDrivenCallback
+}
+
+type ClientDrivenCallback = func([]byte, error)
+
 // A Client is a collection of routers and protocols that can be used to do requests.
 type Client struct {
 	ServerDrivenDownloaders []ServerDrivenDownloader
+	ClientDrivenDownloaders []ClientDrivenDownloader
 }
 
 func (c *Client) Get(ctx context.Context, root cid.Cid, traversal ipsl.Traversal) <-chan blocks.BlockOrError {
+	totalWorkers := uint(len(c.ServerDrivenDownloaders) + len(c.ClientDrivenDownloaders))
 	ctx, cancel := context.WithCancel(ctx)
 	out := make(chan blocks.BlockOrError)
 	d := &download{
 		out:    out,
 		ctx:    ctx,
 		cancel: cancel,
-		done:   uint64(len(c.ServerDrivenDownloaders)),
+		done:   uint64(totalWorkers),
 		root: node{
 			state:     todo,
-			workers:   uint(len(c.ServerDrivenDownloaders)),
+			workers:   totalWorkers,
 			cid:       root,
 			traversal: traversal,
 		},
-		errors: make([]error, len(c.ServerDrivenDownloaders)),
+		errors: make([]error, totalWorkers),
+	}
+
+	for i, cdd := range c.ClientDrivenDownloaders {
+		d.startClientDrivenWorker(cdd, &d.root, &d.errors[i])
 	}
 
 	for i, sdd := range c.ServerDrivenDownloaders {
-		d.startServerDrivenWorker(ctx, sdd, &d.root, &d.errors[i])
+		d.startServerDrivenWorker(ctx, sdd, &d.root, &d.errors[len(c.ClientDrivenDownloaders)+i])
 	}
 
 	return out
@@ -118,8 +150,8 @@ type node struct {
 	state     nodeState
 }
 
-// expand will run the Traversal and create childrens, it must be called while holding n.mu.Mutex.
-// it will unlock n.mu.Mutex
+// expand will run the Traversal and create childrens, it must be called while holding n.mu.
+// it will unlock n.mu.
 func (n *node) expand(d *download, b blocks.Block) error {
 	if n.state != todo {
 		panic(fmt.Sprintf("expanding a node that is not todo: %d", n.state))
@@ -179,8 +211,7 @@ func (n *node) expand(d *download, b blocks.Block) error {
 	return nil
 }
 
-// n.state - notStarted = the number of runners
-type nodeState uint
+type nodeState uint8
 
 const (
 	_ nodeState = iota
