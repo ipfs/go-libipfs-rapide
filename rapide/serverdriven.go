@@ -18,19 +18,17 @@ type serverDrivenWorker struct {
 	outErr   *error
 	current  *node
 	tasks    map[cid.Cid]*node
-	rand     mrand.Rand
 
 	// TODO: add a dontGoThere map which tells you what part of the dag this node is not able to handle
 }
 
-func (d *download) startServerDrivenWorker(ctx context.Context, impl ServerDrivenDownloader, root *node, outErr *error, seed int64) {
+func (d *download) startServerDrivenWorker(ctx context.Context, impl ServerDrivenDownloader, root *node, outErr *error) {
 	w := &serverDrivenWorker{
 		impl:     impl,
 		download: d,
 		outErr:   outErr,
 		current:  root,
 		tasks:    make(map[cid.Cid]*node),
-		rand:     *mrand.New(mrand.NewSource(seed)),
 	}
 
 	go w.work(ctx)
@@ -224,9 +222,9 @@ func (w *serverDrivenWorker) compareChildWithMinimums(child *node, minWorkers ui
 		// if scores are identical randomly select other nodes to randomly distribute where downloads are placed
 		if luck == 0 {
 			// lazy initialisation of luck, this allows to creating a random value when better values exists back to back
-			luck = uint(w.rand.Int())
+			luck = uint(mrand.Int())
 		}
-		newLuck := uint(w.rand.Int())
+		newLuck := uint(mrand.Int())
 		if newLuck >= luck {
 			break
 		}

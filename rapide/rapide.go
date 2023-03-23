@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	mrand "math/rand"
 	"sync"
 	"sync/atomic"
 
@@ -51,9 +50,8 @@ func (c *Client) Get(ctx context.Context, root cid.Cid, traversal ipsl.Traversal
 		errors: make([]error, len(c.ServerDrivenDownloaders)),
 	}
 
-	seedRand := mrand.New(mrand.NewSource(mrand.Int63()))
 	for i, sdd := range c.ServerDrivenDownloaders {
-		d.startServerDrivenWorker(ctx, sdd, &d.root, &d.errors[i], seedRand.Int63()^int64(i))
+		d.startServerDrivenWorker(ctx, sdd, &d.root, &d.errors[i])
 	}
 
 	return out
