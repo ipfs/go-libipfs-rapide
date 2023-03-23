@@ -1,8 +1,8 @@
 package ipsl
 
 import (
+	"github.com/ipfs/boxo/blocks"
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-libipfs/blocks"
 )
 
 type CidTraversalPair struct {

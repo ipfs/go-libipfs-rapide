@@ -8,9 +8,9 @@ import (
 	"sync"
 	"sync/atomic"
 
+	"github.com/ipfs/boxo/blocks"
+	"github.com/ipfs/boxo/ipsl"
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-libipfs/blocks"
-	"github.com/ipfs/go-libipfs/ipsl"
 	"go.uber.org/multierr"
 )
 

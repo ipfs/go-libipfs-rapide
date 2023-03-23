@@ -6,15 +6,15 @@ import (
 	"os"
 	"testing"
 
-	"github.com/ipfs/go-blockservice"
+	"github.com/ipfs/boxo/blocks"
+	"github.com/ipfs/boxo/blockservice"
+	blockstore "github.com/ipfs/boxo/blockstore"
+	offline "github.com/ipfs/boxo/exchange/offline"
+	"github.com/ipfs/boxo/ipld/car/v2"
+	"github.com/ipfs/boxo/ipsl/helpers"
+	. "github.com/ipfs/boxo/ipsl/unixfs"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
-	blockstore "github.com/ipfs/go-ipfs-blockstore"
-	offline "github.com/ipfs/go-ipfs-exchange-offline"
-	"github.com/ipfs/go-libipfs/blocks"
-	"github.com/ipfs/go-libipfs/ipsl/helpers"
-	. "github.com/ipfs/go-libipfs/ipsl/unixfs"
-	"github.com/ipld/go-car/v2"
 	"golang.org/x/exp/slices"
 )
 

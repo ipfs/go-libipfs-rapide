@@ -7,12 +7,12 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/ipfs/boxo/blocks"
+	"github.com/ipfs/boxo/ipld/car/v2"
+	"github.com/ipfs/boxo/ipsl"
+	"github.com/ipfs/boxo/ipsl/unixfs"
+	"github.com/ipfs/boxo/rapide"
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-libipfs/blocks"
-	"github.com/ipfs/go-libipfs/ipsl"
-	"github.com/ipfs/go-libipfs/ipsl/unixfs"
-	"github.com/ipfs/go-libipfs/rapide"
-	"github.com/ipld/go-car/v2"
 )
 
 var _ rapide.ServerDrivenDownloader = Gateway{}

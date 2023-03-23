@@ -5,11 +5,11 @@ import (
 	"fmt"
 
 	"github.com/gogo/protobuf/proto"
+	"github.com/ipfs/boxo/blocks"
+	merkledag_pb "github.com/ipfs/boxo/ipld/merkledag/pb"
+	unixfs_pb "github.com/ipfs/boxo/ipld/unixfs/pb"
+	"github.com/ipfs/boxo/ipsl"
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-libipfs/blocks"
-	"github.com/ipfs/go-libipfs/ipsl"
-	merkledag_pb "github.com/ipfs/go-merkledag/pb"
-	unixfs_pb "github.com/ipfs/go-unixfs/pb"
 )
 
 // Everything is a Traversal that will match all the unixfs childs blocks, forever.

@@ -8,10 +8,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/ipfs/go-blockservice"
+	"github.com/ipfs/boxo/blocks"
+	"github.com/ipfs/boxo/blockservice"
+	"github.com/ipfs/boxo/ipsl"
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-libipfs/blocks"
-	"github.com/ipfs/go-libipfs/ipsl"
 )
 
 var ErrDepthLimitReached = errors.New("safety depth limit reached")

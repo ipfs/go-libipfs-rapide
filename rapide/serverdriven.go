@@ -7,9 +7,9 @@ import (
 	"io"
 	mrand "math/rand"
 
+	"github.com/ipfs/boxo/blocks"
+	"github.com/ipfs/boxo/ipsl"
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-libipfs/blocks"
-	"github.com/ipfs/go-libipfs/ipsl"
 )
 
 type serverDrivenWorker struct {

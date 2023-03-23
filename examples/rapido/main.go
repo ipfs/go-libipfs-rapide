@@ -7,12 +7,12 @@ import (
 	"os"
 	"strings"
 
+	"github.com/ipfs/boxo/ipld/car"
+	"github.com/ipfs/boxo/ipld/car/util"
+	"github.com/ipfs/boxo/ipsl/unixfs"
+	"github.com/ipfs/boxo/rapide"
+	"github.com/ipfs/boxo/rapide/gateway"
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-libipfs/ipsl/unixfs"
-	"github.com/ipfs/go-libipfs/rapide"
-	"github.com/ipfs/go-libipfs/rapide/gateway"
-	"github.com/ipld/go-car"
-	"github.com/ipld/go-car/util"
 )
 
 type stringFlagSlice []string

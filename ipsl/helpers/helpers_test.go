@@ -7,9 +7,9 @@ import (
 	"testing"
 
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/go-libipfs/blocks"
-	"github.com/ipfs/go-libipfs/ipsl"
-	. "github.com/ipfs/go-libipfs/ipsl/helpers"
+	"github.com/ipfs/boxo/blocks"
+	"github.com/ipfs/boxo/ipsl"
+	. "github.com/ipfs/boxo/ipsl/helpers"
 	"github.com/multiformats/go-multihash"
 	"golang.org/x/exp/slices"
 )
