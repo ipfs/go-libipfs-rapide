@@ -138,6 +138,7 @@ func (d download) Close() error {
 }
 
 func TestServerDrivenDownloader(t *testing.T) {
+	t.Parallel()
 	for _, tc := range [...]struct {
 		delay   time.Duration
 		runners uint
@@ -157,7 +158,9 @@ func TestServerDrivenDownloader(t *testing.T) {
 		{time.Millisecond, 10, 5, 5},
 		{time.Millisecond, 100, 3, 10},
 	} {
+		tc := tc
 		t.Run(fmt.Sprintf("%v %v %v %v", tc.delay, tc.runners, tc.width, tc.depth), func(t *testing.T) {
+			t.Parallel()
 			bs := &mockBlockstore{
 				t:     t,
 				delay: tc.delay,

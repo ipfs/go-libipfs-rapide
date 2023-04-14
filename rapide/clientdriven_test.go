@@ -50,6 +50,7 @@ func (m *mockClientDrivenDownloder) Cancel(cids ...cid.Cid) {
 }
 
 func TestClientDrivenDownloader(t *testing.T) {
+	t.Parallel()
 	for _, tc := range [...]struct {
 		delay   time.Duration
 		runners uint
@@ -61,7 +62,9 @@ func TestClientDrivenDownloader(t *testing.T) {
 		{time.Microsecond, 1, 2, 2},
 		{time.Millisecond, 1, 2, 2},
 	} {
+		tc := tc
 		t.Run(fmt.Sprintf("%v %v %v %v", tc.delay, tc.runners, tc.width, tc.depth), func(t *testing.T) {
+			t.Parallel()
 			bs := &mockBlockstore{
 				t:     t,
 				delay: tc.delay,
